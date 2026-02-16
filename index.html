@@ -1,104 +1,90 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Amistad</title>
+    <title>Friendship Page</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            color: white;
             overflow: hidden;
-            background: url('https://example.com/galaxy-background.jpg') center/cover no-repeat;
-            animation: backgroundAnimation 20s infinite alternate;
+            font-family: 'Arial', sans-serif;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
         }
-
-        @keyframes backgroundAnimation {
-            0% { background-position: 0% 0%; }
-            100% { background-position: 100% 100%; }
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkling 1.5s infinite;
         }
-
-        .glow {
-            color: yellow;
-            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
+        @keyframes twinkling {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
         }
-
-        .container {
+        h1 {
             text-align: center;
             margin-top: 20%;
+            font-size: 3em;
         }
-
-        button {
+        #celebrateBtn {
+            display: block;
+            margin: 20px auto;
             padding: 10px 20px;
-            font-size: 20px;
-            background-color: rgba(255, 200, 0, 0.7);
+            font-size: 1.5em;
             border: none;
-            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            color: #000;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            border-radius: 10px;
             transition: transform 0.3s;
         }
-
-        button:hover {
+        #celebrateBtn:hover {
             transform: scale(1.05);
         }
-
         .hearts {
-            display: none;
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 36px;
-            }
-            button {
-                font-size: 18px;
-                padding: 8px 16px;
-            }
+            font-size: 2em;
+            display: none;
+            color: red;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="glow">Bienvenido a la Página de Amistad</h1>
-        <img src="https://example.com/logo.png" alt="BossTrap" class="glow">
-        <p>Gracias por aguantarme y por querer tener mi amistad que yo sé que no es mucho, pero te dejo saber que cada que me necesites estaré para ti. Te quiere, Ron Damon (José)</p>
-        <button id="celebrateButton">¡Celebrar!</button>
-        <div class="hearts">
-            <img src="https://example.com/heart.png" alt="Corazones" width="50"> 
-        </div>
-    </div>
+    <h1>Message from Ron Damon (José)</h1>
+    <button id="celebrateBtn">Celebrate Friendship!</button>
+    <img src="BossTrap_logo.png" alt="BossTrap Logo" style="display: block; margin: 0 auto; width: 200px;" />
     <script>
-        const button = document.getElementById('celebrateButton');
-        const heartsContainer = document.querySelector('.hearts');
-
-        button.addEventListener('click', () => {
-            heartsContainer.style.display = 'block';
-            setTimeout(() => heartsContainer.style.display = 'none', 2000);
-
-            for (let i = 0; i < 10; i++) {
-                const heart = document.createElement('img');
-                heart.src = 'https://example.com/heart.png';
-                heart.style.position = 'absolute';
-                heart.style.left = `${Math.random() * 100}vw`;
-                heart.style.opacity = Math.random();
-                heart.style.transition = 'transform 1s, opacity 1s';
-                heart.style.transform = `translateY(-100px)`;
-                heartsContainer.appendChild(heart);
-
-                setTimeout(() => {
-                    heart.style.transform = 'translateY(-200vh)';
-                    heart.style.opacity = '0';
-                    setTimeout(() => heart.remove(), 1000);
-                }, 100);
-            }
+        // Starfield Animation
+        const starCount = 200;
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 1;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%`;
+            document.body.appendChild(star);
+        }
+        // Floating Hearts
+        const celebrateBtn = document.getElementById('celebrateBtn');
+        celebrateBtn.addEventListener('click', () => {
+            const heart = document.createElement('div');
+            heart.className = 'hearts';
+            heart.innerHTML = '❤️';
+            heart.style.top = '90%';
+            heart.style.left = Math.random() * 100 + '%';
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.style.animation = 'float 2s forwards'; }, 10);
+            setTimeout(() => { document.body.removeChild(heart); }, 2000);
         });
+        // Floating Animation
+        const style = document.createElement('style');
+        style.innerHTML = `@keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-100vh); } }`;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
