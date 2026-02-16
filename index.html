@@ -3,88 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Friendship Page</title>
+    <title>BossTrap</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
             overflow: hidden;
-            font-family: 'Arial', sans-serif;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            color: #ffffff;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            position: relative;
         }
-        .star {
+        #canvas {
             position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkling 1.5s infinite;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
-        @keyframes twinkling {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 1; }
-        }
-        h1 {
+        #message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
-            margin-top: 20%;
-            font-size: 3em;
+            font-size: 2rem;
         }
-        #celebrateBtn {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 1.5em;
-            border: none;
-            background: rgba(255, 255, 255, 0.3);
-            color: #000;
-            cursor: pointer;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-        #celebrateBtn:hover {
-            transform: scale(1.05);
-        }
-        .hearts {
+        #celebrateButton {
             position: absolute;
-            font-size: 2em;
-            display: none;
-            color: red;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 30px;
+            font-size: 1rem;
+            background-color: #ffcc00;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .heart {
+            position: absolute;
+            background-color: red;
+            width: 10px;
+            height: 10px;
+            animation: float 2s ease-in;
+            opacity: 0;
+            border-radius: 50%;
+            z-index: 1000;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <h1>Message from Ron Damon (José)</h1>
-    <button id="celebrateBtn">Celebrate Friendship!</button>
-    <img src="BossTrap_logo.png" alt="BossTrap Logo" style="display: block; margin: 0 auto; width: 200px;" />
+    <canvas id="canvas"></canvas>
+    <div id="message">Message from Ron Damon (José): Welcome to BossTrap!</div>
+    <button id="celebrateButton">Celebrate!</button>
     <script>
-        // Starfield Animation
-        const starCount = 200;
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            const size = Math.random() * 3 + 1;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.top = Math.random() * 100 + '%';
-            star.style.left = Math.random() * 100 + '%`;
-            document.body.appendChild(star);
+        // Canvas setup
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Particle system
+        const particles = [];
+        function createParticle(x, y) {
+            particles.push({
+                x, y,
+                size: Math.random() * 5 + 1,
+                speedX: (Math.random() - 0.5) * 2,
+                speedY: (Math.random() - 0.5) * 2,
+            });
         }
-        // Floating Hearts
-        const celebrateBtn = document.getElementById('celebrateBtn');
-        celebrateBtn.addEventListener('click', () => {
-            const heart = document.createElement('div');
-            heart.className = 'hearts';
-            heart.innerHTML = '❤️';
-            heart.style.top = '90%';
-            heart.style.left = Math.random() * 100 + '%';
-            document.body.appendChild(heart);
-            setTimeout(() => { heart.style.animation = 'float 2s forwards'; }, 10);
-            setTimeout(() => { document.body.removeChild(heart); }, 2000);
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.speedX;
+                p.y += p.speedY;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.fill();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        for (let i = 0; i < 100; i++) {
+            createParticle(Math.random() * canvas.width, Math.random() * canvas.height);
+        }
+        animateParticles();
+
+        // Celebrate button
+        document.getElementById('celebrateButton').addEventListener('click', () => {
+            for (let i = 0; i < 50; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.top = `${60 + Math.random() * 30}vh`;
+                document.body.appendChild(heart);
+                setTimeout(() => {
+                    heart.remove();
+                }, 2000);
+            }
         });
-        // Floating Animation
-        const style = document.createElement('style');
-        style.innerHTML = `@keyframes float { 0% { transform: translateY(0); } 100% { transform: translateY(-100vh); } }`;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
