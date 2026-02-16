@@ -1,1 +1,104 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Friendship Page</title>\n    <style>\n        body, html {\n            margin: 0;\n            padding: 0;\n            height: 100%;\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            font-family: Arial, sans-serif;\n            overflow: hidden;\n            background: url('https://example.com/starfield_background.jpg') no-repeat center center fixed;\n            background-size: cover;\n        }\n        .container {\n            background: rgba(255, 255, 255, 0.3);\n            backdrop-filter: blur(10px);\n            border-radius: 15px;\n            padding: 20px;\n            text-align: center;\n            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);\n            color: #333;\n        }\n        .logo {\n            width: 150px;\n        }\n        .celebrate {\n            background: #ff4081;\n            color: white;\n            border: none;\n            border-radius: 5px;\n            padding: 10px 20px;\n            font-size: 16px;\n            cursor: pointer;\n            transition: background 0.3s;\n        }\n        .celebrate:hover {\n            background: #e91e63;\n        }\n        @keyframes starfield {\n            0% { transform: translateY(0); }\n            100% { transform: translateY(-100%); }\n        }\n    </style>\n</head>\n<body>\n    <div class="container">\n        <img src="https://example.com/bosstrap_logo.png" alt="BossTrap Logo" class="logo">\n        <h1>Friendship</h1>\n        <p>"A friend is someone who knows all about you and still loves you."</p>\n        <button class="celebrate" onclick="celebrate()">Celebrate Friendship!</button>\n    </div>\n    <script>\n        function celebrate() {\n            alert('🎉 Celebrating Friendship! 🎉');\n            // Additional celebration logic, animations, etc. can be added here.\n        }\n    </script>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Amistad</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+            background: url('https://example.com/galaxy-background.jpg') center/cover no-repeat;
+            animation: backgroundAnimation 20s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .glow {
+            color: yellow;
+            text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700;
+        }
+
+        .container {
+            text-align: center;
+            margin-top: 20%;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: rgba(255, 200, 0, 0.7);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .hearts {
+            display: none;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 36px;
+            }
+            button {
+                font-size: 18px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="glow">Bienvenido a la Página de Amistad</h1>
+        <img src="https://example.com/logo.png" alt="BossTrap" class="glow">
+        <p>Gracias por aguantarme y por querer tener mi amistad que yo sé que no es mucho, pero te dejo saber que cada que me necesites estaré para ti. Te quiere, Ron Damon (José)</p>
+        <button id="celebrateButton">¡Celebrar!</button>
+        <div class="hearts">
+            <img src="https://example.com/heart.png" alt="Corazones" width="50"> 
+        </div>
+    </div>
+    <script>
+        const button = document.getElementById('celebrateButton');
+        const heartsContainer = document.querySelector('.hearts');
+
+        button.addEventListener('click', () => {
+            heartsContainer.style.display = 'block';
+            setTimeout(() => heartsContainer.style.display = 'none', 2000);
+
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('img');
+                heart.src = 'https://example.com/heart.png';
+                heart.style.position = 'absolute';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.opacity = Math.random();
+                heart.style.transition = 'transform 1s, opacity 1s';
+                heart.style.transform = `translateY(-100px)`;
+                heartsContainer.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.style.transform = 'translateY(-200vh)';
+                    heart.style.opacity = '0';
+                    setTimeout(() => heart.remove(), 1000);
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
